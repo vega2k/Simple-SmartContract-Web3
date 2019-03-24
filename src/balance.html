@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>    
+<script src="js/web3.min.js"></script>
+</head>
+
+<body>
+    <div class="container" style="padding-top:100px">
+        <h1>계좌의 잔액 조회</h1>
+            <form action="" id="sendForm">
+                <table class="table table-bordered form-inline">
+                    <tr>
+                        <td>계좌 입력</td>
+                        <td>
+                            <input type="text" name="myAddress" placeholder="0x00000000" class="form-control" style="width:300px">
+                            <button class="btn btn-primary" id="confirmBalance">확인</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>계좌 조회</td>
+                        <td>
+                            <span id="myBalance">0</span> ether
+                        </td>
+                    </tr>
+                </table>
+            </form>
+    </div>
+<script>
+var web3 = new Web3();
+web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+
+$(document).ready(function () {
+    $('#confirmBalance').click(function(){
+        var myAddressVal = $('input[name=myAddress]').val();
+        if(myAddressVal){
+            var balance = web3.eth.getBalance(myAddressVal);
+            $('#myBalance').text( parseFloat(web3.fromWei( balance, "ether" )).toFixed(2) );
+        }
+        return false;
+    });
+});
+</script>
+</body>
+</html>
